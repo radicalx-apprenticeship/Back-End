@@ -3,6 +3,10 @@ The core backend for this product is fairly simple as the main feature is just a
 
 ## Getting Started
 ### Installation
+- Clone the repo and cd to it.
+- Install all the dependencies: `npm i`
+- Run The server: `npm run dev`
+
 ## The Folder Structure
 A good defined architecture is the success key for any application.
 If you're familiar with the [MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) design pattern, you may find this one closely similar.

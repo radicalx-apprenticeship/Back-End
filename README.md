@@ -121,18 +121,20 @@ Following the REST best practices, we can, for now, sketch some main simple rout
 
 <p align="center">
     <img src="assets/db_models.png">
-
 </p>
 
 ### Firebase
-To get the API Key for the firebase db, on the top left after creating a project.<br>
-gear icon --> project settings --> General --> SDK setup and Configuration --> copy the text
-
-Also, check this video for starting Firebase for Web apps<br>
-[Getting started with Firebase for the web – Firebase Fundamentals
-](https://www.youtube.com/watch?v=rQvOAnNvcNQ&t=455s)
-
-
+After creating a new project, to get the API key in the project's main page 
+* Frontend Api key
+    * Gear icon top left(Project overview) --> Project settings --> General --> your apps section --> SDK Setup and Configuration --> Choose your setup type and copy the text<br>
+<p align="center">
+    <img src="assets/apikey_frontend.PNG">
+</p><br>
+* Backend Api key
+    * Gear icon top left(Project overview) --> Project settings --> Service accounts --> Generate new private key --> File should be in your downloads folder<br>
+<p align="center">
+    <img src="assets/apikey_backend.PNG.PNG">
+</p>
 
 That's the initial design for the database, thanks to @mohamedamr241
 ## Postamn Docs

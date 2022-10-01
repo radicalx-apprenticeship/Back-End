@@ -12,5 +12,7 @@ app.use(express.urlencoded({extended: true})) // for parsing incoming requests w
 app.use(helmet()) // adds some security to the server
 app.use(cors()) // to be able to call the server from different location::port
 
+// routes
+app.use("/api/v1/", require("./modules/user/user.routes.js"))
 
 module.exports = app

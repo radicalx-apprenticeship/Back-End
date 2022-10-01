@@ -133,7 +133,7 @@ After creating a new project, to get the API key in the project's main page
 * Backend Api key
     * Gear icon top left(Project overview) --> Project settings --> Service accounts --> Generate new private key --> File should be in your downloads folder<br>
 <p align="center">
-    <img src="assets/apikey_backend.PNG.PNG">
+    <img src="assets/apikey_backend.PNG">
 </p>
 
 That's the initial design for the database, thanks to @mohamedamr241

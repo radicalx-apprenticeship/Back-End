@@ -123,6 +123,22 @@ Following the REST best practices, we can, for now, sketch some main simple rout
     <img src="assets/db_models.png">
 </p>
 
+### Firebase
+After creating a new project, to get the API key in the project's main page 
+* Frontend Api key
+    * Gear icon top left(Project overview) --> Project settings --> General --> your apps section --> SDK Setup and Configuration --> Choose your setup type and copy the text<br>
+<p align="center">
+    <img src="assets/apikey_frontend.PNG">
+</p><br>
+* Backend Api key
+    * Gear icon top left(Project overview) --> Project settings --> Service accounts --> Generate new private key --> File should be in your downloads folder<br>
+<p align="center">
+    <img src="assets/apikey_backend.PNG">
+</p>
+
+Also Check this [Loom video](https://www.loom.com/share/7a5bcd474c71440cb5c40e0a1f5af879) for more information.
+<br>
+
 That's the initial design for the database, thanks to @mohamedamr241
 ## Postamn Docs
 In the next sprint we'll start documenting the API for the frontend devs.

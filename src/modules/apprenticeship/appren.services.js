@@ -11,6 +11,17 @@ const createAppren = async (data) => {
         .add(data)
 }
 
+const updateAppren = async (data) => {
+    const docID = data.docID
+    delete data.docID;
+    return await dbRef.collection("apprenticeship")
+    .doc("userID")
+    .collection("apprenList")
+    .doc(docID)
+    .update(data)
+    
+}
 module.exports = {
-    createAppren 
+    createAppren,
+    updateAppren 
 }

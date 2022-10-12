@@ -59,8 +59,32 @@ const createAppren = (data) => {
     return Apprenticeship.parse(data)
 }
 
+const updateAppren = (data) => {
+    const Apprenticeship = z.object({
+        // TODO:  merge the createAppren function to reduce redundency
+        
+        // extra field
+        // document ID
+        docID: z.string(),
+        title: z.string().optional(),
+        company_logo: z.string().url().optional(),
+        company_desc: z.string().optional(),
+        appren_desc: z.string().optional(),
+        intro_vid: z.string().url().optional(),
+        timeline: z.object({
+            start_date: z.string(),
+            end_date: z.string(),
+        }).optional(),
+        team_type: z.string().optional(),
+        team_roles: z.array(createRole()).optional(),
+        team_admins: z.array(createTeamAdmin()).optional(),
+    })
+
+    return Apprenticeship.parse(data)
+}
 
 module.exports = {
-   createAppren 
+   createAppren,
+   updateAppren
 }
 

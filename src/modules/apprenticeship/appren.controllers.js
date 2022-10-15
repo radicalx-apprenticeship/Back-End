@@ -11,7 +11,7 @@ const createAppren = async (req, res) => {
         const apprenData = req.body 
         const data = apprenValidations.createAppren(apprenData)
 
-        const firebaseData = await apprenServices.createAppren(data)
+        const firebaseData = await apprenServices.createAppren(req.user.uid, data)
 
         res.send(new Response(true, SUCCESS_ADD, firebaseData))
         

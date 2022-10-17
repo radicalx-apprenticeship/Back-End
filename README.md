@@ -7,6 +7,22 @@ The core backend for this product is fairly simple as the main feature is just a
 - Install all the dependencies: `npm i`
 - Run The server: `npm run dev`
 
+## Run The Tests
+The tests heavily depend on the [Firebase Local Emulator Suite](https://firebase.google.com/docs/emulator-suite), to get started:
+- Install the [Firebase CLI](https://firebase.google.com/docs/cli#install_the_firebase_cli) and Login to access the projects.
+- Go to the project root dir and Initialize a Firebase Project : `firebase init`, this will generate 2 files `firebase.json` and `.firebaserc`:
+    - `firebase.json` configuration file that lists your project configuration.
+    - `.firebaserc` file that stores your project aliases.
+- Make sure to select the project you created over Firebase Console to add, if you didn't : `firebase use --add` 
+- Start the emulator: `firebase emulators:start`
+- Run the tests: `npm test`
+
+Notes:
+- Choose ports that don't conflict with the any other running process.
+- Make sure to choose: `auth` and `firestore` while selecting the emulator settings.
+- ProTip: you can also download the Firebase Emulator UI.
+- If you don't want to Initialize a firebase project, you can use the current configs but, you have to edit some properties like `project_id` in `firebase.json`.
+
 ## The Folder Structure
 A good defined architecture is the success key for any application.
 If you're familiar with the [MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) design pattern, you may find this one closely similar.

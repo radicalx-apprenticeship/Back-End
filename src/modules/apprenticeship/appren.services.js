@@ -1,5 +1,4 @@
 const firebaseAdmin = require("../../utils/firebaseAdmin.js")
-
 // a ref to the firestore db
 const dbRef = firebaseAdmin.firestore()
 
@@ -12,44 +11,46 @@ const createAppren = async (userId, data, ref = dbRef) => {
         .add(data)
 }
 
-const updateAppren = async (data,docID) => {
-    return await dbRef.collection("apprenticeship")
-        .doc("userID") // This should be a passable parameter
+const updateAppren = async (userId, data, docId, ref = dbRef) => {
+    return await ref.collection("apprenticeship")
+        .doc(userId)
         .collection("apprenList")
-        .doc(docID)
-        .update(data) 
+        .doc(docId)
+        .update(data)
 }
 
-const readAppren = async (docID) => {
-    // single docuemnt    
-    if (docID) {
-        return await dbRef.collection("apprenticeship")
-            .doc("userID") // This should be a passable parameter
+const getAppren = async (userId, docId, ref = dbRef) => {
+    // by default return the documents if no document id was passed
+    if (!docId) {
+        const snapshots = await ref.collection("apprenticeship")
+            .doc(userId)
             .collection("apprenList")
-            .doc(docID)
             .get()
 
-    // all the documents    
-    } else {
-        return await dbRef.collection("apprenticeship")
-            .doc("userID") // This should be a passable parameter
-            .collection("apprenList")
-            .get()  
+        return snapshots.docs.reduce((account, doc, _) => {
+            account[doc.id] = doc.data()
+            return account
+        }, {})
+    } 
+    const snapshot = await ref.collection("apprenticeship")
+        .doc(userId)
+        .collection("apprenList")
+        .doc(docId)
+        .get()
 
-    }
+    return snapshot.data() || {}
 }
 
-const clearAppren = async (docID) => {
-    console.log("service: ", docID,typeof(docID) )
-    return await dbRef.collection("apprenticeship")
-        .doc("userID") // This should be a passable parameter
+const deleteAppren = async (userId, docId, ref = dbRef) => {
+    return await ref.collection("apprenticeship")
+        .doc(userId) // This should be a passable parameter
         .collection("apprenList")
-        .doc(docID)
+        .doc(docId)
         .delete()
 }
 module.exports = {
     createAppren,
     updateAppren,
-    readAppren,
-    clearAppren
+    getAppren,
+    deleteAppren 
 }

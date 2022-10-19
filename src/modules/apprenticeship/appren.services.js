@@ -12,6 +12,44 @@ const createAppren = async (userId, data, ref = dbRef) => {
         .add(data)
 }
 
+const updateAppren = async (data,docID) => {
+    return await dbRef.collection("apprenticeship")
+        .doc("userID") // This should be a passable parameter
+        .collection("apprenList")
+        .doc(docID)
+        .update(data) 
+}
+
+const readAppren = async (docID) => {
+    // single docuemnt    
+    if (docID) {
+        return await dbRef.collection("apprenticeship")
+            .doc("userID") // This should be a passable parameter
+            .collection("apprenList")
+            .doc(docID)
+            .get()
+
+    // all the documents    
+    } else {
+        return await dbRef.collection("apprenticeship")
+            .doc("userID") // This should be a passable parameter
+            .collection("apprenList")
+            .get()  
+
+    }
+}
+
+const clearAppren = async (docID) => {
+    console.log("service: ", docID,typeof(docID) )
+    return await dbRef.collection("apprenticeship")
+        .doc("userID") // This should be a passable parameter
+        .collection("apprenList")
+        .doc(docID)
+        .delete()
+}
 module.exports = {
-    createAppren 
+    createAppren,
+    updateAppren,
+    readAppren,
+    clearAppren
 }

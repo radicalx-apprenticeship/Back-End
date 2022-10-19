@@ -7,6 +7,7 @@ TODO:
 */
 
 const z = require("zod")
+const message = require("../../helpers/message")
 
 const createRoleSkill = () => {
     const RoleSkill = z.string()
@@ -59,8 +60,49 @@ const createAppren = (data) => {
     return Apprenticeship.parse(data)
 }
 
+const updateAppren = (data) => {
+    const Apprenticeship = z.object({
+        title: z.string().optional(),
+        company_logo: z.string().url().optional(),
+        company_desc: z.string().optional(),
+        appren_desc: z.string().optional(),
+        intro_vid: z.string().url().optional(),
+
+        timeline: z.object({
+            start_date: z.string(),
+            end_date: z.string(),
+        }).optional(),
+
+        team_type: z.string().optional(),
+        team_roles: z.array(createRole()).optional(),
+        team_admins: z.array(createTeamAdmin()).optional(),
+    })
+
+    return Apprenticeship.parse(data)
+}
+
+const readAppren =(data) => {
+    const ID = z.object({
+        id: z.string().nullable().optional()
+
+    })
+    
+    return ID.parse(data)
+}
+
+const clearAppren =(data) => {
+    const ID = z.object({
+        id: z.string().min(2,{message: "You have to pass the document's ID"})
+
+    })
+    
+    return ID.parse(data)
+}
 
 module.exports = {
-   createAppren 
+   createAppren,
+   updateAppren,
+   readAppren,
+   clearAppren
 }
 

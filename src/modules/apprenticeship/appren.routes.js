@@ -6,13 +6,12 @@ const apprenControllers = require("./appren.controllers.js")
 router.post("/appren", isAuthorized, apprenControllers.createAppren)
 
 // update an apprenticeship
-router.put("/appren/:id", apprenControllers.updateAppren)
+router.put("/appren/:id", isAuthorized, apprenControllers.updateAppren)
 
-// read an apprenticeship
-router.get("/appren/:id",apprenControllers.readAppren)
-router.get("/appren",apprenControllers.readAppren)
+// get apprenticeship/s
+router.get("/appren/:id?", isAuthorized, apprenControllers.getAppren)
 
 // delete an apprenticeship
-router.delete("/appren/:id", apprenControllers.clearAppren)
+router.delete("/appren/:id", isAuthorized, apprenControllers.deleteAppren)
 
 module.exports = router

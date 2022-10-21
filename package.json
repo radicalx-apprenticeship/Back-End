@@ -4,7 +4,8 @@
   "description": "This is the backend for the apprenticeship product built for RadicalX",
   "main": "server.js",
   "scripts": {
-    "test": "jest --forceExit --maxWorkers=1",
+    "jest": "jest --forceExit --maxWorkers=1",
+    "tests": "export FIREBASE_AUTH_EMULATOR_HOST=\"127.0.0.1:9099\"; firebase emulators:exec \"npm run jest\"",
     "dev": "nodemon src/server.js",
     "prod": "node src/server.js"
   },

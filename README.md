@@ -14,8 +14,7 @@ The tests heavily depend on the [Firebase Local Emulator Suite](https://firebase
     - `firebase.json` configuration file that lists your project configuration.
     - `.firebaserc` file that stores your project aliases.
 - Make sure to select the project you created over Firebase Console to add, if you didn't : `firebase use --add` 
-- Start the emulator: `firebase emulators:start`
-- Run the tests: `npm test`
+- Run the tests: `npm run tests`
 
 Notes:
 - Choose ports that don't conflict with the any other running process.
@@ -23,6 +22,7 @@ Notes:
 - ProTip: you can also download the Firebase Emulator UI.
 - If you don't want to Initialize a firebase project, you can use the current configs but, you have to edit some properties like `project_id` in `firebase.json`.
 - If you faced `'Error while making request: connect ECONNREFUSED ::1:9099`, make sure to export as : `export FIREBASE_AUTH_EMULATOR_HOST="127.0.0.1:9099"`
+- Didn't try to run the tests on windows, but if you face a problem that `export` isn't valid command, change it to `set`.
 
 ## The Folder Structure
 A good defined architecture is the success key for any application.

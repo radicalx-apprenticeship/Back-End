@@ -22,6 +22,7 @@ Notes:
 - Make sure to choose: `auth` and `firestore` while selecting the emulator settings.
 - ProTip: you can also download the Firebase Emulator UI.
 - If you don't want to Initialize a firebase project, you can use the current configs but, you have to edit some properties like `project_id` in `firebase.json`.
+- If you faced `'Error while making request: connect ECONNREFUSED ::1:9099`, make sure to export as : `export FIREBASE_AUTH_EMULATOR_HOST="127.0.0.1:9099"`
 
 ## The Folder Structure
 A good defined architecture is the success key for any application.

@@ -3,9 +3,12 @@ const uploader = require("../../middlewares/uploader.js")
 const statusCodes = require("../../helpers/status.js")
 const Response = require("../../helpers/response.js")
 const { NOT_ALLOWED_UPLOAD, SUCCESS_UPLOAD, UNEXPECTED_UPLOAD } = require("../../helpers/message.js")
+const { streamToCloud } = require("../../utils/googleCloud.js")
+
 /*
 Upload Single content :
-    - img
+    - image
+    - video
 */
 const uploadContent = async (req, res) => {
 
@@ -25,7 +28,14 @@ const uploadContent = async (req, res) => {
             if (err?.code == "UNEXPECTED") 
                 throw {code: statusCodes.NOT_ALLOWED, message: UNEXPECTED_UPLOAD} // TODO: define server side errors
 
-            res.send(new Response(true, SUCCESS_UPLOAD(mediaContentType), req.file))
+            if (err)
+                throw err
+
+            const publicUrl = `https://storage.googleapis.com/${bucket.name}/${req.file.filename}`
+            res.send(new Response(true, SUCCESS_UPLOAD(mediaContentType), publicUrl))
+
+            streamToCloud(req.file)
+
         } catch(e) {
             res.status(e.code || statusCodes.BAD).send(new Response(
                 false,

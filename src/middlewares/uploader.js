@@ -7,6 +7,7 @@ const multer = require("multer")
 const path = require("path")
 const fs = require("fs")
 const getRandomName = require("../helpers/uuid")
+const { ALLOWED_IMG_MIME, ALLOWED_VID_MIME } = require("../helpers/allowedTypes")
 
 // the location where things are stored
 const LOC = `../../${process.env.MEDIA}`
@@ -47,12 +48,15 @@ module.exports = multer({
     fileFilter: function (req, file, cb) {
         // imgs only
         const fileSize = parseFloat(req.headers["content-length"]) // TODO: not the best thing to do
-        if ((file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") && fileSize <= MAX_SIZE.img) {
+        if (!file.mimetype.includes(file.fieldname))
+            return cb({code: "NOT_MATCHED"}) // TODO: generalize this to a central place
+
+        if (ALLOWED_IMG_MIME.includes(file.mimetype) && fileSize <= MAX_SIZE.img) {
             cb(null, true)
-        }else if (file.mimetype === "video/mp4" && fileSize <= MAX_SIZE.vid) {
+        }else if (ALLOWED_VID_MIME.includes(file.mimetype) && fileSize <= MAX_SIZE.vid) {
             cb(null, true)
         }else {
-            cb({message: "NOT_ALLOWED"}) // TODO: generalize this to a central place
+            cb({code: "UNEXPECTED"}) // TODO: generalize this to a central place
         }
     }
 })

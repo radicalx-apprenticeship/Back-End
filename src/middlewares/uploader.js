@@ -10,6 +10,7 @@ const getRandomName = require("../helpers/uuid")
 const { ALLOWED_IMG_MIME, ALLOWED_VID_MIME } = require("../helpers/allowedTypes")
 
 // the location where things are stored
+// FIXME: use path to get the actual path
 const LOC = `../../${process.env.MEDIA}`
 const MAX_SIZE = {
     content: parseFloat(process.env.SIZE)  * 1024 * 1024,
@@ -49,14 +50,14 @@ module.exports = multer({
         // imgs only
         const fileSize = parseFloat(req.headers["content-length"]) // TODO: not the best thing to do
         if (!file.mimetype.includes(file.fieldname))
-            return cb({code: "NOT_MATCHED"}) // TODO: generalize this to a central place
+            return cb({name: "NOT_MATCHED"}) // TODO: generalize this to a central place
 
         if (ALLOWED_IMG_MIME.includes(file.mimetype) && fileSize <= MAX_SIZE.img) {
             cb(null, true)
         }else if (ALLOWED_VID_MIME.includes(file.mimetype) && fileSize <= MAX_SIZE.vid) {
             cb(null, true)
         }else {
-            cb({code: "UNEXPECTED"}) // TODO: generalize this to a central place
+            cb({name: "UNEXPECTED"}) // TODO: generalize this to a central place
         }
     }
 })

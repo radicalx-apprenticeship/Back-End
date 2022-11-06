@@ -8,6 +8,7 @@ module.exports = {
     SYNTAX_FAIL: "Hold on, you have a syntax error on the body, make sure it's a valid JSON.",
     NOT_ALLOWED_UPLOAD: "You can't upload this type of content, please check the docs.",
     UNEXPECTED_UPLOAD: "Unexpected error while attempting to upload this content, check the size and ext.",
+    INTERNAL_ERROR: "Unexpected error with the server, due to some internal failures.",
     SUCCESS_UPLOAD: function (type) {
         return `${type} has been uploaded sucessfully to the server.`
     }

@@ -1,9 +1,13 @@
-const { ZodError } = require("zod")
 const uploader = require("../../middlewares/uploader.js")
 const statusCodes = require("../../helpers/status.js")
 const Response = require("../../helpers/response.js")
-const { NOT_ALLOWED_UPLOAD, SUCCESS_UPLOAD, UNEXPECTED_UPLOAD } = require("../../helpers/message.js")
-const { streamToCloud } = require("../../utils/googleCloud.js")
+const { streamToCloud, getRemoteUrl } = require("../../utils/googleCloud.js")
+const { ALLOWED_MULTER_UPLOAD } = require("../../helpers/allowedTypes.js")
+const mediaValidations = require("./media.validations.js")
+const { SUCCESS_UPLOAD } = require("../../helpers/message.js")
+const { APIError } = require("../../helpers/errors.js")
+const message = require("../../helpers/message.js")
+const { MulterError } = require("multer")
 
 /*
 Upload Single content :
@@ -11,41 +15,40 @@ Upload Single content :
     - video
 */
 const uploadContent = async (req, res) => {
+    try {
+        const mediaContentType = req.params.type
+        if (!ALLOWED_MULTER_UPLOAD.includes(mediaContentType))
+            // TODO: move not supported
+            throw new APIError("NOT_SUPPORTED", {
+                httpCode: statusCodes.NOT_ALLOWED,
+                description: message.NOT_ALLOWED_UPLOAD,
+                isOp: false
+            })
 
-    const mediaContentType = req.params.type
-    if (mediaContentType !== "image" && mediaContentType !== "video")
-        return res.status(statusCodes.NOT_ALLOWED)
+        uploader.single(mediaContentType)(req, res, async (err) => {
+            try {
+                // throw errors if failed
+                mediaValidations.validateRequestFile(err)
+                res.send(new Response(true, SUCCESS_UPLOAD(mediaContentType), getRemoteUrl(req.file)))
+                streamToCloud(req.file)
+            } catch(e) {
+                res.status(e instanceof MulterError ? statusCodes.BAD : e.code)
+                    .send(new Response(
+                        false,
+                        e.message,
+                        ""
+                    ))
+            }
+        })
+    } catch (err) {
+        res.status(err.code || statusCodes.BAD)
             .send(new Response(
                 false,
-                NOT_ALLOWED_UPLOAD,
+                e.message,
                 ""
             ))
-    uploader.single(mediaContentType)(req, res, async (err) => {
-        try {
-            if (err?.code == "LIMIT_UNEXPECTED_FILE" || err?.code == "NOT_MATCHED") 
-                throw {code: statusCodes.NOT_ALLOWED, message: NOT_ALLOWED_UPLOAD} // TODO: define server side errors
-
-            if (err?.code == "UNEXPECTED") 
-                throw {code: statusCodes.NOT_ALLOWED, message: UNEXPECTED_UPLOAD} // TODO: define server side errors
-
-            if (err)
-                throw err
-
-            const publicUrl = `https://storage.googleapis.com/${bucket.name}/${req.file.filename}`
-            res.send(new Response(true, SUCCESS_UPLOAD(mediaContentType), publicUrl))
-
-            streamToCloud(req.file)
-
-        } catch(e) {
-            res.status(e.code || statusCodes.BAD).send(new Response(
-                false,
-                e instanceof ZodError ? JSON.parse(e.message) : e.message,
-                ""
-            ))
-        }
-    })
+    }
 }
-
 
 module.exports = {
     uploadContent,

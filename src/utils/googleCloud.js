@@ -11,9 +11,9 @@ const uploadWhole = (file) => {
     bucket.upload(file.path, {resumable: true})
 }
 
-const streamToCloud = (file) => {
+const streamToCloud = (userId, file) => {
 
-    const blob = bucket.file(file.filename)
+    const blob = bucket.file(`${userId}/${file.filename}`)
     const rs = fs.createReadStream(file.path) // read stream 
     const ws = blob.createWriteStream() // write stream
 
@@ -23,8 +23,8 @@ const streamToCloud = (file) => {
 }
 
 // return the google bucket url/path to uploaded file
-const getRemoteUrl = (file) => {
-    return `https://storage.googleapis.com/${bucket.name}/${file.filename}`
+const getRemoteUrl = (userId, file) => {
+    return `https://storage.googleapis.com/${bucket.name}/${userId}/${file.filename}`
 }
 
 module.exports = {

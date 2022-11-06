@@ -29,8 +29,8 @@ const uploadContent = async (req, res) => {
             try {
                 // throw errors if failed
                 mediaValidations.validateRequestFile(err)
-                res.send(new Response(true, SUCCESS_UPLOAD(mediaContentType), getRemoteUrl(req.file)))
-                streamToCloud(req.file)
+                res.send(new Response(true, SUCCESS_UPLOAD(mediaContentType), getRemoteUrl(req.user.uid, req.file)))
+                streamToCloud(req.user.uid, req.file)
             } catch(e) {
                 res.status(e instanceof MulterError ? statusCodes.BAD : e.code)
                     .send(new Response(

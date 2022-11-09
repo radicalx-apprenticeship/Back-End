@@ -1,7 +1,7 @@
 const uploader = require("../../middlewares/uploader.js")
 const statusCodes = require("../../helpers/status.js")
 const Response = require("../../helpers/response.js")
-const { streamToCloud, getRemoteUrl } = require("../../utils/googleCloud.js")
+const { streamToCloud, getRemoteUrl, deleteFromCloud } = require("../../utils/googleCloud.js")
 const { ALLOWED_MULTER_UPLOAD } = require("../../helpers/allowedTypes.js")
 const mediaValidations = require("./media.validations.js")
 const { SUCCESS_UPLOAD } = require("../../helpers/message.js")
@@ -49,7 +49,21 @@ const uploadContent = async (req, res) => {
             ))
     }
 }
+const deleteContent = async (req, res) => {
+    try {
+        await deleteFromCloud(req.user.uid, req.params.filename)
+        res.send(new Response(true, message.SUSCCESS_DELETE_MEDIA, ""))
+    } catch (e) {
+        res.status(statusCodes.BAD)
+            .send(new Response(
+                false,
+                e.message,
+                ""
+            ))
+    }
+}
 
 module.exports = {
     uploadContent,
+    deleteContent
 }

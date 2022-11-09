@@ -9,6 +9,9 @@ module.exports = {
     NOT_ALLOWED_UPLOAD: "You can't upload this type of content, please check the docs.",
     UNEXPECTED_UPLOAD: "Unexpected error while attempting to upload this content, check the size and ext.",
     INTERNAL_ERROR: "Unexpected error with the server, due to some internal failures.",
+    SUSCCESS_DELETE_MEDIA: function (name) {
+        return `${name} has been deleted sucessfully.`
+    },
     SUCCESS_UPLOAD: function (type) {
         return `${type} has been uploaded sucessfully to the server.`
     }

@@ -159,6 +159,15 @@ After creating a new project, to get the API key in the project's main page
     <img src="assets/apikey_backend.PNG" width="70%">
 </p>
 
+### Cloud Storage
+As you can see, we're going all google (which is kinda meh for me tbh), so we're using the google cloud bucket.
+
+To make it work, make sure to go to the project you created on firebase and modify a bucket `*.appspot.com` :
+- Get the project id to `.env` as specified in the `.env.example`
+- Copy the bucket name to `.env` as specified in the `.env.example`
+- Add read permissions for `allUsers`
+- Add write permissions for `allAuthorizedUsers`
+
 Still having trouble? check this out: [Loom video](https://www.loom.com/share/7a5bcd474c71440cb5c40e0a1f5af879)
 ## Postamn Docs
 In the next sprint we'll start documenting the API for the frontend devs.
